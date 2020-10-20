@@ -23,13 +23,12 @@ app.all('*', (_req, res) => {
 // Connect to database
 require('./db/mongoose');
 
+// Error handller
 app.use((error, _req, res, _next) => {
-    res.status(500).send({errors: {message: error.message}});
-})
-
-// Listen
-app.listen(process.env.PORT || 3000, () => {
-    console.log('Server Running...')
+    if(process.env.APP_ENV = 'development') {
+        console.log(error)
+    }
+    res.status(500).send({errors: {msg: error.message}});
 });
 
 module.exports = app;

@@ -24,7 +24,7 @@ Controller.prepareQueries = function (queries) {
     const filter = {};
 
     for (const query in queries) {
-        if(queries[query] && query !== 'search') {
+        if(queries[query] && query !== 'search' && query.startsWith('_')) {
             filter[query] = queries[query];
         }
     }
