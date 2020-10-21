@@ -26,7 +26,7 @@ module.exports.login = function(req, res, next) {
         const token = jwt.sign(user, process.env.JWT_SECRET);
         user._token = token;
         user.save().then(user => {
-            res.send({success: true, token: user._token});
+            res.send({success: true, user});
         }).catch(err => next(err));
     }).catch(err => next(err));
 }
