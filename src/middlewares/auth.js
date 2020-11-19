@@ -23,7 +23,7 @@ module.exports = function (req, res, next) {
     console.log(verifiedToken);
     User.findOne({_id: verifiedToken._id, _token: token}).then(user => {
         if (!user) {
-            return res.status(403).send({errors: [{msg: "Authentication Failed"}]});
+            return res.status(401).send({errors: [{msg: "Authentication Failed"}]});
         }
         req.auth = user;
         next();

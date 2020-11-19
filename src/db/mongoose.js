@@ -18,14 +18,17 @@ if(USER) {
 uri += HOST + ':' + PORT + '/' + NAME;
 
 // Connect to mongodb server
-mongoose.connect(uri, {
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}, err => {
-    if(err) {
-        console.log(err.message);
-    } else {
-        console.log('Connected to database');
-    }
-})
+
+exports.connect = function () {
+    mongoose.connect(uri, {
+        useCreateIndex: true,
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }).then(_mongoose => {
+        console.log('Connected to Database');
+    }).catch(err => console.log(err));
+}
+
+exports.disconnect = function () {
+    mongoose.disconnect().catch(err => console.log(err));
+}
