@@ -24,7 +24,7 @@ schema.pre('save', function (next) {
     if (this.isModified('_password')) {
         this._password = bcrypt.hashSync(this._password);
     }
-    next()
+    next();
 });
 
 module.exports = mongoose.model('User', schema);

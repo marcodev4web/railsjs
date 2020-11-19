@@ -3,7 +3,7 @@
  * @module src/routes/api
  */
 
-const router = require('./router.js');
+const router = require('./router');
 
 // Auth routes
 router.auth();

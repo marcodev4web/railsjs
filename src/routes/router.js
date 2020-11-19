@@ -16,7 +16,7 @@ const handleValidationErrors = require('../middlewares/handleValidationErrors');
  * @return void
  */
 router.resource = function(path, ...handlers) {
-    if(path.charAt(path.length - 1) !== '/') {
+    if(!path.endsWith('/')) {
         path += '/';
     }
     
