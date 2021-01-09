@@ -17,13 +17,13 @@ const AUTH_FIELD = 'username';
  * @param {Function} next 
  */
 module.exports.login = function(req, res, next) {
-    User.findOne({[AUTH_FIELD]: req.body[AUTH_FIELD]}).select('_password')
+    User.findOne({[AUTH_FIELD]: req.body[AUTH_FIELD]}, {_password: 1, [AUTH_FIELD]: 1})
     .then(user => {
         if(!user || !bcrypt.compareSync(req.body.password, user._password)) {
-            return res.status(400).send({errors: [{msg: "Authentication Failed"}]});
+            throwError('AuthError', 'Authentication Failed', null, 401);
         }
 
-        const token = jwt.sign(user, process.env.JWT_SECRET);
+        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
         user._token = token;
         user.save().then(user => {
             res.send({success: true, user});
@@ -38,7 +38,7 @@ module.exports.login = function(req, res, next) {
  * @param {Function} next 
  */
 module.exports.logout = function(req, res, next) {
-    const user = req.auth;
+    const user = req.$auth;
     user._token = undefined;
     user.save().then(_user => {
         res.send({success: true});

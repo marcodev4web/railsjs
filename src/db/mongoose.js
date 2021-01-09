@@ -10,15 +10,16 @@ const {
 } = process.env;
 
 let uri = 'mongodb://';
+
 if(USER) {
     uri += USER;
     if(PASSWORD) uri += (':' + PASSWORD);
     uri += '@';
 }
+
 uri += HOST + ':' + PORT + '/' + NAME;
 
 // Connect to mongodb server
-
 exports.connect = function () {
     mongoose.connect(uri, {
         useCreateIndex: true,

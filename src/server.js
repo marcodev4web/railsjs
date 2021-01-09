@@ -20,12 +20,21 @@ app.all('*', (_req, res, _next) => {
     res.redirect('/');
 })
 
+global.throwError = function (name, message, errors, status) {
+    const err = new Error();
+    if(name) err.name = name;
+    if(message) err.message = message;
+    if(errors) err.errors = errors;
+    if(status) err.status = status;
+    throw err;
+}
+
 // Error handller
-app.use((error, _req, res, _next) => {
+app.use((err, _req, res, _next) => {
     if(process.env.APP_ENV === 'development') {
-        console.log(error)
+        console.log(err);
     }
-    res.status(500).send({errors: {msg: error.message}});
+    res.status(err.status || 500).send({errors: err.errors, statusCode: err.status || 500, message: err.message, error: err.name});
 });
 
 module.exports = app;

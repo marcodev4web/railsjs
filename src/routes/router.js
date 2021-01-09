@@ -4,9 +4,9 @@
  */
 
 const router = require('express').Router();
-const AuthController = require('../controllers/AuthController.js');
+const AuthController = require('../controllers/AuthController');
 const { body }  = require('express-validator');
-const auth = require('../middlewares/auth.js');
+const auth = require('../middlewares/auth');
 const handleValidationErrors = require('../middlewares/handleValidationErrors');
 
 /**
@@ -21,12 +21,13 @@ router.resource = function(path, ...handlers) {
     }
     
     const controller = handlers.pop();
+    const validator = handlers.pop();
 
-    this.get(path, ...handlers, controller.find);
-    this.post(path, ...handlers, controller.create);
-    this.get(path + ':id', ...handlers, controller.get);
-    this.patch(path + ':id', ...handlers, controller.update);
-    this.delete(path + ':id', ...handlers, controller.delete);
+    this.get(path, ...handlers, controller.find());
+    this.post(path, ...handlers, validator.create, controller.create());
+    this.get(path + ':id', ...handlers, controller.fetch());
+    this.patch(path + ':id', ...handlers, validator.update, controller.update());
+    this.delete(path + ':id', ...handlers, controller.delete());
 }
 
 /**
@@ -35,8 +36,8 @@ router.resource = function(path, ...handlers) {
  */
 router.auth = function () {
     this.post('/login', [
-        body('username').trim().escape().notEmpty().withMessage("Username is Empty"),
-        body('password').trim().escape().notEmpty().withMessage("Password is Empty"),
+        body('username').notEmpty().trim().escape().withMessage("Username is Empty"),
+        body('password').notEmpty().withMessage("Password is Empty"),
         handleValidationErrors
     ], AuthController.login);
     this.get('/logout', auth, AuthController.logout);

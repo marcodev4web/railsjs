@@ -9,7 +9,7 @@ const User = require('../models/User');
 /**
  * @property The name of the filed stores token
  */
-const AUTH_TOKEN = 'Authentication'
+const AUTH_TOKEN = 'Authorization'
 
 /**
  * Determine if there is an authenticated user or not
@@ -23,9 +23,9 @@ module.exports = function (req, res, next) {
     console.log(verifiedToken);
     User.findOne({_id: verifiedToken._id, _token: token}).then(user => {
         if (!user) {
-            return res.status(401).send({errors: [{msg: "Authentication Failed"}]});
+            throwError('AuthError', 'Authentication Failed', null, 401);
         }
-        req.auth = user;
+        req.$auth = user;
         next();
     }).catch(err => next(err));
 }
