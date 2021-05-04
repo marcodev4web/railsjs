@@ -16,8 +16,8 @@ exports.create = [
 exports.update = [
     body('username').optional().trim().escape().notEmpty().withMessage('Username is Empty')
         .isLength({min: 4}).withMessage('Username must be 4 chars at least')
-        .custom(async value => {
-            if(await User.exists({username: value})) throw new Error('Username already exists');
+        .custom(async (value, { req }) => {
+            if(await User.exists({username: value, _id: {$ne: req.params.id}})) throw new Error('Username already exists');
         }),
     body('password').optional().isStrongPassword().withMessage('Password is weak'),
     handleValidationErrors

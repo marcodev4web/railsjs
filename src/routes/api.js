@@ -4,8 +4,15 @@
  */
 
 const router = require('./router');
+
+// Middlewares
+const auth = require('../middlewares/auth');
+
+// Controllers
 const UserController = require('../controllers/UserController');
-const userValidator = require('../validators/userValidator');
+
+// Validators
+const userValidator = require('../validators/user');
 
 // Auth routes
 router.auth();

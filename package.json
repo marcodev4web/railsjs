@@ -1,25 +1,26 @@
 {
-  "name": "api-web-server",
+  "name": "rails.js",
   "version": "1.0.0",
-  "description": "A Simple API Web Server",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "start": "node .",
     "dev": "nodemon .",
-    "start": "node ."
+    "test": "jest",
+    "setup": "node setup.js"
   },
   "author": "MarcoDev",
   "license": "ISC",
   "devDependencies": {
     "jest": "^26.6.0",
-    "jsdoc": "^3.6.6",
     "nodemon": "^2.0.6",
     "supertest": "^5.0.0"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
-    "csurf": "^1.11.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
@@ -28,6 +29,6 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.9",
     "morgan": "^1.10.0",
-    "validator": "^13.5.2"
+    "multer": "^1.4.2"
   }
 }

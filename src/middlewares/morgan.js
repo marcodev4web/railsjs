@@ -9,7 +9,7 @@ const path = require('path');
 
 let logger = morgan('dev');
 
-if (process.env.APP_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
     let logStream = fs.createWriteStream(path.join(__dirname, '../logs/requests.log'), {flags: 'a'});
 
     logger = morgan('common', {stream: logStream});

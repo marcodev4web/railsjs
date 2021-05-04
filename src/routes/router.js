@@ -5,9 +5,8 @@
 
 const router = require('express').Router();
 const AuthController = require('../controllers/AuthController');
-const { body }  = require('express-validator');
 const auth = require('../middlewares/auth');
-const handleValidationErrors = require('../middlewares/handleValidationErrors');
+const authValidator = require('../validators/auth');
 
 /**
  * Resource items
@@ -22,7 +21,7 @@ router.resource = function(path, ...handlers) {
     
     const controller = handlers.pop();
     const validator = handlers.pop();
-
+    
     this.get(path, ...handlers, controller.find());
     this.post(path, ...handlers, validator.create, controller.create());
     this.get(path + ':id', ...handlers, controller.fetch());
@@ -34,13 +33,14 @@ router.resource = function(path, ...handlers) {
  * Add authentication routes
  * @return void
  */
-router.auth = function () {
-    this.post('/login', [
-        body('username').notEmpty().trim().escape().withMessage("Username is Empty"),
-        body('password').notEmpty().withMessage("Password is Empty"),
-        handleValidationErrors
-    ], AuthController.login);
-    this.get('/logout', auth, AuthController.logout);
+router.auth = function (options = {}) {
+    this.post('/login', authValidator.login, AuthController.login);
+    this.post('/logout', auth, AuthController.logout);
+    this.get('/auth', auth, AuthController.auth);
+
+    if(options.register) {
+        this.post('/register', authValidator.register, AuthController.register);
+    }
 }
 
 module.exports = router;

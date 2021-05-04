@@ -5,11 +5,11 @@
 
 const { validationResult } = require('express-validator');
 
-module.exports = function (req, res, next) {
+module.exports = (req, res, next) => {
     const errors = validationResult(req);
 
     if(!errors.isEmpty()) {
-        throwError('ValidationError', "errors", errors.array(), 400);
+        throwError('ValidationError', "Array", errors.array(), 400);
     }
     next();
 }
