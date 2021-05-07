@@ -9,7 +9,7 @@ Boost API development process with NodeJS by tacking care of daily tasks making 
 * Support SPA Apps
 * CRUD Endpoints
 * Controller With Hooks
-* Authentication Out Of The Box(JWT)
+* Authentication Out Of The Box (JWT)
 * Validators
 * Error Handling
 * Logging
@@ -27,7 +27,7 @@ Boost API development process with NodeJS by tacking care of daily tasks making 
 1- Fetch it from GitHub
 
 ``` 
-$ git fetch http://github.com/Marco4WebDev/expresso
+$ git fetch http://github.com/marcodev4web/railsjs
 ```
 
 2- Download Dependencies
