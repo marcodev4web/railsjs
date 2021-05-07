@@ -5,17 +5,20 @@ A REST API Framework based on the popular [Express.js](https://expressjs.com) an
 Boost API development process with NodeJS by tacking care of daily tasks making developers focusing on the app itself
 
 ## Features
+* Based On Express.js And Mongoose
 * Support SPA Apps
 * CRUD Endpoints
 * Controller With Hooks
-* Authentication (JWT)
+* Authentication Out Of The Box(JWT)
+* Validators
 * Error Handling
 * Logging
-* Seperate Logic In Files (controllers, validators, models)
-* Setup Admin User With One Command
+* Seperate Logic In Files (Controllers, Validators, Models, Routes)
+* Setup Script
 
 ## Future Features
-* Different Authentication Strategies (using passport.js)
+* Support Different Authentication Strategies (using passport.js)
+* Support Different Databases (SQL And NoSQL)
 * Support WebSockets (using socket.io)
 * Support Uploading Large Files
 * Support Image Optimization
@@ -37,7 +40,7 @@ $ npm install
 
 ### Create Your First Model
 
-Models/Product.js
+models/Product.js
 ```javascript
 const mongoose = require('mongoose');
 const baseSchema = require('./BaseSchema');     // include base schema
@@ -54,7 +57,7 @@ const schema = new mongoose.Schema({
     },
     price: {
         type: String,
-        required
+        required: true
     },
     stock: {
         type: Number,
@@ -71,7 +74,7 @@ module.exports = mongoose.model('Product', schema)
 
 ### Create Your First Controller
 
-Controllers/ProductController.js
+controllers/ProductController.js
 ```javascript
 const Controller = require('./Controller');     // base controller
 const Product = require('../models/Product');       // model linked to the controller
@@ -96,17 +99,17 @@ router.post('/posts', PostController.create()) // Add create endpoint for posts
 ```
 #### CRUD Endpoints Explained
 
-| Endpoint | Method | Route         | Controller.method | Hooks                                                    |
-|----------|--------|---------------|-------------------|----------------------------------------------------------|
-| Find     | GET    | /products     | find()            | beforeFind(), afterFind()                                |
-| Fetch    | GET    | /products/:id | fetch()           | beforeFetch(), afterFetch()                              |
-| Create   | POST   | /products     | create()          | beforeCreate(), beforeSave(), afterSave(), afterCreate() |
-| Update   | PATCH  | /products/:id | update()          | beforeUpdate(), beforeSave(), afterSave(), afterUpdate() |
-| Delete   | DELETE | /products/:id | delete()          | beforeDelete(), afterDelete()                           |
+| Endpoint | Method | Route         | Controller.method | Hooks                                                        |
+|----------|--------|---------------|-------------------|--------------------------------------------------------------|
+| Find     | GET    | /products     | find()            | $beforeFind(), $afterFind()                                  |
+| Fetch    | GET    | /products/:id | fetch()           | $beforeFetch(), $afterFetch()                                |
+| Create   | POST   | /products     | create()          | $beforeCreate(), $beforeSave(), $afterSave(), $afterCreate() |
+| Update   | PATCH  | /products/:id | update()          | $beforeUpdate(), $beforeSave(), $afterSave(), $afterUpdate() |
+| Delete   | DELETE | /products/:id | delete()          | $beforeDelete(), $afterDelete()                              |
 
 > You can use hooks to extend endpoint logic:
 ```javascript
-ProductController.beforeCreate = (req, res, next) => {
+ProductController.$beforeCreate = (req, res, next) => {
     // Your logic here
     // Don't forget next() :)
     next()
