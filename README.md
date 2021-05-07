@@ -24,10 +24,10 @@ Boost API development process with NodeJS by tacking care of daily tasks making 
 * Support Image Optimization
 
 ## Installation
-1- Fetch it from GitHub
+1- Clone it from GitHub
 
 ``` 
-$ git fetch http://github.com/marcodev4web/railsjs
+$ git clone http://github.com/marcodev4web/railsjs
 ```
 
 2- Download Dependencies
